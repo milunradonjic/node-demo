@@ -23,14 +23,16 @@ router.post('/', userContoller.createUser);
  *     description: Login
  *     produces:
  *       - application/json
- *     parameters:
- *       - name: user
- *         description: User object
- *         in:  body
- *         required: true
- *         type: object
- *         schema:
- *           $ref: '#/definitions/User'
+ *     requestBody:
+ *       content:s
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               animals:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: users
