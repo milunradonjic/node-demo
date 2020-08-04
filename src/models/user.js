@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { USER_MODEL } = require('../constants/model-names');
 
 const userSchema = new mongoose.Schema(
   {
@@ -85,6 +86,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model(USER_MODEL, userSchema);
 
 module.exports = User;

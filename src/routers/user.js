@@ -4,41 +4,7 @@ const userContoller = require('../controllers/user');
 
 const router = new express.Router();
 
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management
- */
-
 router.post('/', userContoller.createUser);
-
-/**
- * @swagger
- *
- * /api/users/login:
- *   post:
- *     tags:
- *        - Users
- *     description: Login
- *     produces:
- *       - application/json
- *     requestBody:
- *       content:s
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               animals:
- *                 type: array
- *                 items:
- *                   type: string
- *     responses:
- *       200:
- *         description: users
- *         schema:
- *           $ref: '#/definitions/User'
- */
 router.post('/login', userContoller.login);
 router.post('/logout', auth, userContoller.logout);
 router.post('/logoutAll', auth, userContoller.logoutAll);
