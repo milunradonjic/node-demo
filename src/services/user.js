@@ -25,7 +25,7 @@ const logoutAll = async (user) => {
 };
 
 const validateUpdate = (updates) => {
-  const allowedUpdates = ['email', 'password', 'age'];
+  const allowedUpdates = ['name', 'email', 'password', 'age'];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -33,9 +33,12 @@ const validateUpdate = (updates) => {
   if (!isValidOperation) throw new ErrorHandler(400, 'Invalid updates');
 };
 
-const updateCurrentUser = async (user, updates) => {
+const updateCurrentUser = async (user, updateObject) => {
+  const updates = Object.keys(updateObject);
   validateUpdate(updates);
-  updates.forEach((update) => (user[update] = req.body[update]));
+  _.extend(user, updateObject);
+  console.log(user);
+  updates.forEach((update) => (user[update] = updateObject[update]));
   await user.save();
   return user;
 };
