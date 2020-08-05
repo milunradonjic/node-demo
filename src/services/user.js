@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { ErrorHandler } = require('../utils/error');
 
 const createUser = async (userDTO) => {
   const user = new User(userDTO);
@@ -24,17 +25,16 @@ const logoutAll = async (user) => {
 };
 
 const validateUpdate = (updates) => {
-  const allowedUpdates = ['name', 'email', 'password', 'age'];
+  const allowedUpdates = ['email', 'password', 'age'];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
 
-  if (!isValidOperation) return { msg: 'Invalid updates!' };
+  if (!isValidOperation) throw new ErrorHandler(400, 'Invalid updates');
 };
 
 const updateCurrentUser = async (user, updates) => {
-  const error = validateUpdate(updates);
-  if (error && error.msg) return error;
+  validateUpdate(updates);
   updates.forEach((update) => (user[update] = req.body[update]));
   await user.save();
   return user;

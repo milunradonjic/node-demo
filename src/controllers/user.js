@@ -48,15 +48,14 @@ const getCurrentUser = async (req, res) => {
   res.send(req.user);
 };
 
-const updateCurrentUser = async (req, res) => {
+const updateCurrentUser = async (req, res, next) => {
   try {
     const updates = Object.keys(req.body);
     const { user } = req;
     const result = await userService.updateCurrentUser(user, updates);
-    if (result.error) return res.status(400).send(result.error);
-    return res.send(result.user);
+    return res.send(result);
   } catch (e) {
-    return res.status(400).send(e);
+    next(e);
   }
 };
 
