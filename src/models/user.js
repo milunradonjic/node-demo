@@ -6,7 +6,7 @@ const {
   USER_MODEL,
   PROJECT_MODEL,
   ROLE_MODEL,
-} = require('../constants/model-names');
+} = require('../constants/model_names');
 
 const userSchema = new mongoose.Schema(
   {

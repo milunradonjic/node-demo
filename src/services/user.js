@@ -1,5 +1,6 @@
+const HttpStatus = require('http-status-codes');
 const User = require('../models/user');
-const { ErrorHandler } = require('../utils/error');
+const BaseError = require('../errors/base_error');
 
 const createUser = async (userDTO) => {
   const user = new User(userDTO);
@@ -34,7 +35,8 @@ const validateUpdate = (updates) => {
     allowedUpdates.includes(update)
   );
 
-  if (!isValidOperation) throw new ErrorHandler(400, 'Invalid updates');
+  if (!isValidOperation)
+    throw new BaseError(HttpStatus.BAD_REQUEST, 'Invalid updates');
 };
 
 const updateCurrentUser = async (user, updateObject) => {
