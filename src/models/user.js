@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { USER_MODEL } = require('../constants/model-names');
+const {
+  USER_MODEL,
+  PROJECT_MODEL,
+  ROLE_MODEL,
+} = require('../constants/model-names');
 
 const userSchema = new mongoose.Schema(
   {
@@ -33,6 +37,20 @@ const userSchema = new mongoose.Schema(
         }
       },
     },
+    projects: [
+      {
+        project: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: PROJECT_MODEL,
+        },
+        roles: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: ROLE_MODEL,
+          },
+        ],
+      },
+    ],
     tokens: [
       {
         token: {

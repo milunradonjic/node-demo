@@ -13,11 +13,15 @@ const createUser = async (req, res) => {
   }
 };
 
+const createUserGraphQL = async (userDTO) => {
+  const { user, token } = await userService.createUser(userDTO);
+  sendWelcomeEmail(user.email, user.name);
+  return { user, token };
+};
+
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   try {
-    console.log(req.body);
     const { user, token } = await userService.login(email, password);
     res.send({ user, token });
   } catch (e) {
@@ -69,6 +73,15 @@ const deleteCurrentUser = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await userService.getUsers();
+    return users;
+  } catch (e) {
+    return e;
+  }
+};
+
 module.exports = {
   createUser,
   login,
@@ -77,4 +90,6 @@ module.exports = {
   getCurrentUser,
   updateCurrentUser,
   deleteCurrentUser,
+  getUsers,
+  createUserGraphQL,
 };

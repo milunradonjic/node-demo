@@ -5,6 +5,10 @@ const createUser = async (userDTO) => {
   const user = new User(userDTO);
   await user.save();
   const token = await user.generateAuthToken();
+  await User.populate(user, [
+    { path: 'projects.project' },
+    { path: 'projects.roles' },
+  ]);
   return { user, token };
 };
 
@@ -36,8 +40,6 @@ const validateUpdate = (updates) => {
 const updateCurrentUser = async (user, updateObject) => {
   const updates = Object.keys(updateObject);
   validateUpdate(updates);
-  _.extend(user, updateObject);
-  console.log(user);
   updates.forEach((update) => (user[update] = updateObject[update]));
   await user.save();
   return user;
@@ -47,6 +49,13 @@ const deleteCurrentUser = async (user) => {
   await user.remove();
 };
 
+const getUsers = async () => {
+  const res = await User.find()
+    .populate('projects.project')
+    .populate('projects.roles');
+  return res;
+};
+
 module.exports = {
   createUser,
   login,
@@ -54,4 +63,5 @@ module.exports = {
   logoutAll,
   updateCurrentUser,
   deleteCurrentUser,
+  getUsers,
 };
