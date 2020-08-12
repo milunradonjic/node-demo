@@ -7,16 +7,25 @@ const isEmpty = (arr) => arr === null || arr.length === 0;
 
 const projects = [
   {
+    _id: '5f32f50a5a9f316c236d62c9',
     name: 'Test Project 1',
     description: 'This is first test project',
   },
   {
+    _id: '5f32f50a5a9f316c236d62ca',
     name: 'Test Project 2',
     description: 'This is second test project',
   },
 ];
 
-const roles = Object.keys(allRoles).map((key) => ({
+const roleIds = [
+  '5f32f50a5a9f316c236d62cb',
+  '5f32f50a5a9f316c236d62cc',
+  '5f32f50a5a9f316c236d62cd',
+  '5f32f50a5a9f316c236d62ce',
+];
+const roles = Object.keys(allRoles).map((key, index) => ({
+  _id: roleIds[index],
   name: allRoles[key],
 }));
 
@@ -27,12 +36,12 @@ const users = [
     password: '$2b$08$8u3rxsEA.xiUgcvb2fDgrOSjPkFHkB9DjTbMuAqiG7aHWOohy8JDa',
     projects: [
       {
-        project: '5f32f50a5a9f316c236d62c9',
-        roles: ['5f32f50a5a9f316c236d62cb', '5f32f50a5a9f316c236d62cc'],
+        project: projects[0]._id,
+        roles: [roleIds[0], roleIds[1]],
       },
       {
-        project: '5f32f50a5a9f316c236d62ca',
-        roles: ['5f32f50a5a9f316c236d62cb', '5f32f50a5a9f316c236d62cc'],
+        project: projects[1]._id,
+        roles: [roleIds[0], roleIds[1]],
       },
     ],
   },
@@ -41,8 +50,8 @@ const users = [
     email: 'misho.radonjic951@gmail.com',
     password: '$2b$08$pvedf465pQ90YmDy7dmiCe.gaafqadk1AoBzQbAXBNhVWGGz5a6l.',
     projects: {
-      project: '5f32f50a5a9f316c236d62ca',
-      roles: ['5f32f50a5a9f316c236d62cd', '5f32f50a5a9f316c236d62ce'],
+      project: projects[1]._id,
+      roles: [roleIds[2], roleIds[3]],
     },
   },
 ];
