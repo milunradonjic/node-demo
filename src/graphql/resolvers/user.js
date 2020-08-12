@@ -1,26 +1,22 @@
 const userService = require('../../services/user');
 
 const { sendWelcomeEmail } = require('../../emails/account');
-const AuthenticationError = require('../../errors/authentication_error');
+const auth = require('../../utils/auth');
 
 module.exports = {
-  users: async (args, req) => {
-    if (!req.isAuth) throw new AuthenticationError();
-    const users = await userService.getUsers(args.pageable);
-    return users;
+  users: (args, req) => {
+    auth(req);
+    return userService.getUsers(args.pageable);
   },
 
-  createUser: async (args, req) => {
-    if (!req.isAuth) throw new AuthenticationError();
-    const { userInput } = args;
+  createUser: async ({ userInput }, req) => {
+    auth(req);
     const { user, token } = await userService.createUser(userInput);
     sendWelcomeEmail(user.email, user.name);
     return { user, token };
   },
 
-  login: async (args) => {
-    const { email, password } = args;
-    const res = await userService.login(email, password);
-    return res;
+  login: async ({ email, password }) => {
+    return userService.login(email, password);
   },
 };
