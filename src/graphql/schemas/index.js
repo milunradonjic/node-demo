@@ -43,8 +43,13 @@ module.exports = buildSchema(`
         token: String!
       }
 
+      input Pageable {
+        page: Int!
+        size: Int
+      }
+
       type RootQuery {
-        users: [User!]!
+        users(pageable: Pageable): [User!]!
         login(email: String!, password: String!): AuthData!
       }
 

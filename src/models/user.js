@@ -94,6 +94,20 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
+userSchema.statics.findPage = (pageable) => {
+  if (!pageable) {
+    pageable = {
+      page: 1,
+      size: 20,
+    };
+  }
+  const { page, size } = pageable;
+  return User.find()
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * size)
+    .limit(size);
+};
+
 userSchema.pre('save', async function (next) {
   const user = this;
 

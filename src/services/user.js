@@ -51,11 +51,12 @@ const deleteCurrentUser = async (user) => {
   await user.remove();
 };
 
-const getUsers = async () => {
-  const res = await User.find()
-    .populate('projects.project')
-    .populate('projects.roles');
-  return res;
+const getUsers = async (pageable) => {
+  return !pageable
+    ? User.find().populate('projects.project').populate('projects.roles')
+    : User.findPage(pageable)
+        .populate('projects.project')
+        .populate('projects.roles');
 };
 
 module.exports = {

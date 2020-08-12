@@ -6,7 +6,7 @@ const AuthenticationError = require('../../errors/authentication_error');
 module.exports = {
   users: async (args, req) => {
     if (!req.isAuth) throw new AuthenticationError();
-    const users = await userService.getUsers();
+    const users = await userService.getUsers(args.pageable);
     return users;
   },
 
