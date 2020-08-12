@@ -14,12 +14,6 @@ const createUser = async (req, res) => {
   }
 };
 
-const createUserGraphQL = async (userDTO) => {
-  const { user, token } = await userService.createUser(userDTO);
-  sendWelcomeEmail(user.email, user.name);
-  return { user, token };
-};
-
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -29,8 +23,6 @@ const login = async (req, res) => {
     res.status(HttpStatus.BAD_REQUEST).send();
   }
 };
-
-const loginGraphQL = (email, password) => userService.login(email, password);
 
 const logout = async (req, res) => {
   try {
@@ -76,15 +68,6 @@ const deleteCurrentUser = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
-  try {
-    const users = await userService.getUsers();
-    return users;
-  } catch (e) {
-    return e;
-  }
-};
-
 module.exports = {
   createUser,
   login,
@@ -93,7 +76,4 @@ module.exports = {
   getCurrentUser,
   updateCurrentUser,
   deleteCurrentUser,
-  getUsers,
-  createUserGraphQL,
-  loginGraphQL,
 };
