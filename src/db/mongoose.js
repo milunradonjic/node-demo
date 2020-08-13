@@ -9,3 +9,5 @@ mongoose.connect(
   },
   (err) => (err ? console.log(err) : console.log('Connection success'))
 );
+
+mongoose.set('debug', process.env.MONGOOSE_DEBUG);
