@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const UserRepository = require('../repositories/user');
 const AuthenticationError = require('../errors/authentication_error');
 
 const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({
+    const user = await UserRepository.findOne({
       _id: decoded._id,
       'tokens.token': token,
     });
@@ -25,7 +25,7 @@ const isAuthGraphQL = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({
+    const user = await UserRepository.findOne({
       _id: decoded._id,
       'tokens.token': token,
     });

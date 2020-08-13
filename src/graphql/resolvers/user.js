@@ -5,7 +5,7 @@ const auth = require('../../utils/auth');
 
 module.exports = {
   users: (args, req) => {
-    auth(req);
+    // auth(req);
     return userService.getUsers(args.pageable);
   },
 
