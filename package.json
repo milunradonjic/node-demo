@@ -16,18 +16,18 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.2.1",
+    "apollo-server-express": "^2.16.1",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
+    "graphql-tools": "^6.0.18",
     "helmet": "^3.23.3",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.24",
     "morgan": "^1.10.0",
-    "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4",
     "validator": "^13.1.1"
   },
   "devDependencies": {

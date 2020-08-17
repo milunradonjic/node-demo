@@ -1,9 +1,10 @@
 const express = require('express');
 const helmet = require('helmet');
 const logger = require('morgan');
+const cors = require('cors');
 
 // graphql
-const graphqlHTTP = require('./graphql/http');
+const graphqlServer = require('./graphql/graphql');
 
 const handleError = require('./middlewares/error_handling');
 
@@ -12,11 +13,11 @@ require('./db/mongoose');
 require('./loaders/data');
 
 const router = require('./routers/router');
-const { isAuthGraphQL } = require('./middlewares/auth');
 
 const app = express();
 
 app.use(helmet());
+app.use(cors());
 app.use(logger(process.env.LOGGER));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -24,8 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', router);
 
 // GraphQL endpoint
-app.use(isAuthGraphQL);
-app.use('/graphql', graphqlHTTP);
+graphqlServer.applyMiddleware({ app });
 
 app.use(handleError);
 

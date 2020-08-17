@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
   }
 };
 
-const isAuthGraphQL = async (req, res, next) => {
+const authGraphQL = async (req) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -30,17 +30,11 @@ const isAuthGraphQL = async (req, res, next) => {
       'tokens.token': token,
     });
 
-    if (!user) req.isAuth = false;
-    else {
-      req.token = token;
-      req.user = user;
-      req.isAuth = true;
-    }
-    next();
+    if (!user) return { isAuth: false };
+    return { token, user, isAuth: true };
   } catch (e) {
-    req.isAuth = false;
-    next();
+    return { isAuth: false };
   }
 };
 
-module.exports = { auth, isAuthGraphQL };
+module.exports = { auth, authGraphQL };
